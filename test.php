@@ -1,9 +1,9 @@
 <?php
-$test_arr = file('tests/'.$_POST['test_name']);
+$href = 'tests/'.$_POST['test_name'];
+$test_arr = file($href);
 $name = trim($test_arr[1]);
 $time = trim($test_arr[2]);
 $teacher = trim($test_arr[3]);
-$o = trim($test_arr[4]);
 ?>
 <head>
     <meta charset="utf-8">
@@ -23,16 +23,16 @@ $o = trim($test_arr[4]);
             <p class="text-right"> Викладач: <strong><?=$teacher?></strong></p>
         </div>
         <?php
+            setcookie('test', $href);
             for($i=5; $i<count($test_arr); $i++){
-                $test = split('/', $test_arr[$i]);
+                $test = split('\\', $test_arr[$i]);
 
                 $test_html = '<div class="span6 offset3 well test">';
                 $test_html .= '<p class="text-left">'.trim($test[0]).'</p>';
                 $test_html .= '<div class="btn-group span12" data-toggle="buttons-radio">';
                 $last = count($test)-1;
-                $test_html .= '<data numb='.$i.' true="'.trim($test[$last]).'" >';
                 for($j=1; $j<$last; $j++) {
-                    $test_html .= '<button type="button" class="btn btn-link btn-test" data-render="'.$j.'">'.$j.') '.trim($test[$j]).'</button><br>';
+                    $test_html .= '<button type="button" class="btn btn-link btn-test" data-numb='.$i.' data-render="'.$j.'">'.$j.') '.trim($test[$j]).'</button><br>';
                 }
                 $test_html .= '</div>';
                 $test_html .= '</div>';
@@ -40,17 +40,47 @@ $o = trim($test_arr[4]);
             }
         ?>
         <div class="span6 offset3">
-            <button class="span12 btn btn-large btn-primary">Завершити</button>
+            <button class="span12 btn btn-large btn-primary btn-send">Завершити</button>
         </div>
     </div>
     <script>
         function startTimer(timer){
-            setInterval(function () {
+            var times = +timer.html();
+            var interval = setInterval(function () {
             timer.html(timer.html()-1);
+            if( Math.abs(timer.html())== times){
+                $('.btn-send').click();
+                clearInterval(interval);
+}
             }, 1000);
         }
 
         startTimer($('.timer'));
+
+        var renders = new Array($('.btn-group').size());
+
+           $('.btn-test').click(function(){
+              $(this).parent().find('.btn-test').removeClass('select');
+               $(this).addClass('select');
+               renders[$(this).attr('data-numb')] = $(this).attr('data-render');
+           });
+
+        $('.btn-send').click(function () {
+            var render = '';
+            for(var i=0;i<renders.length; i++){
+                render += renders[i]+'\\';
+            }
+            $.get(
+                'testResponder.php',
+                {
+                    render:render,
+                    timer:$('.timer').html()
+                },
+                function(data){
+                    alert(data);
+                }
+            )
+        });
     </script>
 </body>
 
