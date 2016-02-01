@@ -1,2 +1,24 @@
 body {
 }
+
+.result {
+	display: none;
+}
+
+.god {
+	background: #2EAA31
+}
+
+.soso {
+	background: #CDCC3F;
+}
+
+.bad {
+	background: #BF4949;
+}
+
+.result {
+	padding-top: 25px;
+	padding-bottom: 25px;
+	margin-top: 10%;
+}
