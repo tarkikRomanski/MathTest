@@ -1,4 +1,9 @@
 <?php
+require_once 'db_connect.php';
+use DataBase\Connect as db;
+
+$db_connect = new db('Test');
+
 if(isset($_GET['render'])) {
     $href =$_COOKIE['test'];
     $test_arr = file($href);
@@ -32,4 +37,8 @@ $zp = ((100*$k)*$a)/$x;
 $z = ($s * $zp) / 100*$k;
 $z = round($z);
 echo $z;
+/*Записуємо результат в db*/
+$value_arr = array($_COOKIE[userName], $_COOKIE[userGroup], $_COOKIE[test], $b, $z, $test_arr[3], date('j.n.Y G:i:s'));
+$column_arr = array('userName', 'userGroup', 'test', 'time', 'mark', 'teacher', 'date');
+$db_connect->insertDataTable('resultats', $value_arr, $column_arr);
 }

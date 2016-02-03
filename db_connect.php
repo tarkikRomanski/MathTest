@@ -26,7 +26,7 @@ namespace DataBase;
         {
             try {
                 $query = $this->connect->query("SELECT $column FROM $table");
-                $query->setFetchMode(PDO::FETCH_ASSOC);
+                $query->setFetchMode(PDO::FETCH_NUM);
                 $id = 0;
                 while ($ressult = $query->fetch()) {
                     $row[$id] = $ressult;
@@ -42,7 +42,7 @@ namespace DataBase;
         {
             try {
                 $query = $this->connect->query("SELECT * FROM $table WHERE $where");
-                $query->setFetchMode(PDO::FETCH_ASSOC);
+                $query->setFetchMode(PDO::FETCH_NUM);
                 $id = 0;
                 while ($ressult = $query->fetch()) {
                     $row[$id] = $ressult;
@@ -137,7 +137,7 @@ namespace DataBase;
 
         public function deleteRow($table, $where)
         {
-            $this->connect->exec('DELETE FROM' . $table . ' WHERE' . $where);
+            $this->connect->exec('DELETE FROM ' . $table . ' WHERE ' . $where);
         }
 
         public function createTable($sql)

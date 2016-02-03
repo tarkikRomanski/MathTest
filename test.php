@@ -52,6 +52,7 @@ $teacher = trim($test_arr[3]);
             <h4 class="text-right"><?=$_COOKIE['userName'] . '  ' . $_COOKIE['userGroup']?></h4>
             <h1 class="text-center"><span id="resultat"></span> балів</h1>
             <p>Потрачений час: <span class="b"></span> секунд</p>
+            <a href="index.php" class="btn btn-link text-rigth" style="color: white">Далі</a>
         </div>
     </div>
 

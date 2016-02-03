@@ -22,3 +22,22 @@ body {
 	padding-bottom: 25px;
 	margin-top: 10%;
 }
+
+table {
+	border: 1px solid silver;
+	margin-top: 160px;
+}
+
+thead {
+	text-align: center;
+	cursor: default;
+}
+
+tbody {
+	text-align: left;
+}
+
+tbody tr:hover{
+	background-color: #5B9EB6;
+	color: white;
+}

@@ -14,7 +14,7 @@
     <center><img class="img-rounded " src="img/ico.png" width="140" height="140" ></center>
     <?php include_once "navigator.php" ?>
     <?php
-        if(isset($_COOKIE['userName'])) {
+        if(isset($_COOKIE['userName']) || isset($_COOKIE['teacher'])) {
             echo '
                 <div class="row-fluid">
                     <div class="offset3 span6 text-center text-info">
