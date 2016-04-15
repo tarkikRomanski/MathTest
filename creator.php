@@ -41,7 +41,8 @@
             </div>
         </p>
 
-        <div id="question_array"></div>
+        <div id="question_array">
+        </div>
 
         <button class="btn btn-large btn-warning" id="add_question">Добавити питання</button>
         <button class="btn btn-large btn-info" id="send_data">Далі <i class="icon-arrow-right icon-white"> </i> </button>
@@ -81,23 +82,16 @@
     }
 
     var addQuestion = function(){
-        console.log($('.question_card[question='+question+']').length);
-        console.log($('.question_card[question='+question+']'));
-        if($('.question_card[question='+question+']').length > 0) {
-            $('.question_card[question='+question+']').html($('.question_card[question='+question+']').html() + getQuestionTemplate());
-            question++;
-            console.log()
-            $('.add_e').click(addE);
-        } else {
-            $('#question_array').html(getQuestionTemplate());
-        }
+        alert(question);
+        $('#question_array').append(getQuestionTemplate());
+        question++;
+        $('.add_e').click(addE);
     }
 
     var addE = function() {
-        var i = $(this).attr("question") - 1;
-        var buffE = $('.question_card[question='+i+']').find('.e').last().attr('e');
-        $('.question_card[question='+i+']').find('.e[e='+buffE+']').html($('.question_card[question='+i+']').find('.e[e='+buffE+']').html() + getETemplate((buffE+1), i));
-
+        var i = $(this).attr("question");
+        var buffE = $('.question_card[question='+i+']').find('.e').last().attr('e') * 1;
+        $('.question_card[question='+i+']').find('.e_card').append(getETemplate((buffE+1), i));
     }
 
     addQuestion();
