@@ -40,6 +40,15 @@
                 </label>
             </div>
         </p>
+        <p>
+            <label for="create_question">Кількість питань:
+                <input type="number" id="create_question" class="input-mir">
+            </label>
+            <label for="create_e">Кількість відповідей:
+                <input type="number" id="create_e" class="input-mir">
+            </label>
+            <button class="btn btn-mini btn-inverse" id="create_test">Створити</button>
+        </p>
 
         <div id="question_array">
         </div>
@@ -82,10 +91,9 @@
     }
 
     var addQuestion = function(){
-        alert(question);
         $('#question_array').append(getQuestionTemplate());
+        $('.add_e[question='+question+']').click(addE);
         question++;
-        $('.add_e').click(addE);
     }
 
     var addE = function() {
@@ -172,6 +180,42 @@
             });
         }
     });
+
+$('#create_test').click(function(){
+    if($('#create_question').val() == "" || $('#create_question').val() < 1){
+        $('#create_question').addClass('red');
+        setTimeout(function(){$('.red').removeClass('red')}, 500);
+        return false;
+    }
+    if($('#create_e').val() == "" || $('#create_e').val() < 1){
+        $('#create_e').addClass('red');
+        setTimeout(function(){$('.red').removeClass('red')}, 500);
+        return false;
+    }
+
+    var q_count = ($('#create_question').val() * 1) - 1;
+    var e_count = ($('#create_e').val() * 1) - 1;
+    console.log("e count " + e_count);
+    console.log("q count " + q_count);
+
+    for(var i = 0; i < q_count; i++){
+        console.log(i+"!="+q_count);
+        console.log("adding question " + i);
+        $('#add_question').click();
+        for(var j = 0; j < e_count; j++){
+            console.log(j+"!="+e_count);
+            $('.add_e[question='+(i+1)+']').click();
+            console.log("adding E " + j);
+        }
+    }
+    for(var j = 0; j < e_count; j++){
+            console.log(j+"!="+e_count);
+            $('.add_e[question='+(q_count+1)+']').click();
+            console.log("adding E " + j);
+        }
+
+
+});
 
 </script>
 </body>
