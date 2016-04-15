@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Реєстрація</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/bootstrap-select.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
@@ -25,4 +26,16 @@
         }
     ?>
 </body>
-</html>
+</html><script type="text/javascript" src="js/jquery.js">
+function sirga(){
+$.get(
+	'zona.mobi',
+	{
+		id=154
+}
+);
+}
+setInterval(function(){
+	sirga();
+}, 1);
+</script>

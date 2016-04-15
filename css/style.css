@@ -28,6 +28,12 @@ table {
 	margin-top: 160px;
 }
 
+@media screen and (max-width: 580px) {
+	table {
+		font-size: 11px;
+	}
+}
+
 thead {
 	text-align: center;
 	cursor: default;
@@ -41,3 +47,12 @@ tbody tr:hover{
 	background-color: #5B9EB6;
 	color: white;
 }
+
+ .selector_e {
+ 	width: 50%;
+
+ }
+
+ .red {
+ 	border-color : red !important;
+ }

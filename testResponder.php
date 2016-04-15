@@ -20,16 +20,16 @@ if(isset($_GET['render'])) {
     $z = 0;
     $k = 1;
     // перевіряємо вірність тестів
-    for ($i=5, $j=0; $i<count($test_arr); $i++, $j++){ 
-        $test = split('//',$test_arr[$i]);
+    for ($i=5, $j=0; $i<count($test_arr); $i++, $j++){
+        $test = split('/:i:/',$test_arr[$i]);
         $lastid = count($test)-1;
         $last = $test[$lastid];
-       
-        if(trim($last) == trim($render[$j])) 
+
+        if(trim($last) == trim($render[$j]))
             $a++;
     }
- 
- if($b > $c) 
+
+ if($b > $c)
         $k = abs($c / $b - 1);
 
 
