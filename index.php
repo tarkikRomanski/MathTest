@@ -1,41 +1,57 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Реєстрація</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
-    <link href="css/bootstrap-select.min.css" rel="stylesheet" media="screen">
-    <link href="css/style.css" rel="stylesheet" media="screen">
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/bootstrap-select.min.js"></script>
-</head>
-<body>
-    <center><img class="img-rounded " src="img/ico.png" width="140" height="140" ></center>
-    <?php include_once "navigator.php" ?>
-    <?php
-        if(isset($_COOKIE['userName']) || isset($_COOKIE['teacher'])) {
-            echo '
-                <div class="row-fluid">
-                    <div class="offset3 span6 text-center text-info">
-                        <a href="exit.php">Вийти</a>
-                    </div>
-                </div>
-            ';
-        }
-    ?>
-</body>
-</html><script type="text/javascript" src="js/jquery.js">
-function sirga(){
-$.get(
-	'zona.mobi',
-	{
-		id=154
+<?php
+require_once('./vendor/autoload.php');
+
+use App\Controllers\AuthController;
+use App\Controllers\TestController;
+use App\Controllers\API\TestController as APITestController;
+
+$authController = new AuthController();
+$testController = new TestController();
+
+$apiTestController = new APITestController();
+
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+$requestString = $_SERVER['REQUEST_URI'];
+
+// API routes
+if (strpos($requestString, 'api') !== false) {
+    if ($requestMethod === 'GET' && strpos($requestString, 'tests') !== false) {
+        $apiTestController->getList();
+
+        return;
+    }
+
+    return;
 }
-);
+
+
+// WEB routes
+if (
+    $requestMethod === 'GET' &&
+    (
+        !isset($_COOKIE['teacher']) &&
+        !isset($_COOKIE['userName'])
+    )
+) {
+    $authController->show();
+
+    return;
 }
-setInterval(function(){
-	sirga();
-}, 1);
-</script>
+
+if ($requestMethod === 'POST' && strpos($requestString, 'login') !== false) {
+    $authController->login();
+
+    return;
+}
+
+if ($requestMethod === 'GET' && strpos($requestString, 'logout') !== false) {
+    $authController->logout();
+
+    return;
+}
+
+if ($requestMethod === 'GET' && isset($_COOKIE['userName'])) {
+    $testController->showList();
+
+    return;
+}

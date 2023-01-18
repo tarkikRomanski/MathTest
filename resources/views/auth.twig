@@ -1,0 +1,24 @@
+{% extends "layouts/main-layout.twig" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="row-fluid">
+        <form class="form-horizontal span6 offset3" method="post" action="/login">
+            <legend>Login</legend>
+            <div class="control-group">
+                <label class="control-label">Name:</label>
+                <div class="controls">
+                    <input type="text" name="name" class="input-medium span12">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Group:</label>
+                <div class="controls">
+                    <input type="text" name="group" class="input-medium span12">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-large span6 offset3">Next</button>
+        </form>
+    </div>
+{% endblock %}
