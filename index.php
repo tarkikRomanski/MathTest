@@ -50,6 +50,12 @@ if ($requestMethod === 'GET' && strpos($requestString, 'logout') !== false) {
     return;
 }
 
+if ($requestMethod === 'GET' && strpos($requestString, 'test') !== false) {
+    $testController->show();
+
+    return;
+}
+
 if ($requestMethod === 'GET' && isset($_COOKIE['userName'])) {
     $testController->showList();
 

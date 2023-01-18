@@ -1,0 +1,92 @@
+{% extends "layouts/main-layout.twig" %}
+
+{% block title %}{{ test.name }}{% endblock %}
+
+{% block content %}
+    <div class="row-fluid all-test">
+        <div class="span6 offset3">
+            <h2 class="text-center test-name">{{ name }}</h2>
+
+            <h5 class="text-right">Дано часу - {{ test.time }} секунд</h5>
+            <h4 class="text-right"><span class="timer">{{ test.time }}</span> секунд</h4>
+            <p class="text-right"> Викладач: <strong>{{ test.teacher }}</strong></p>
+        </div>
+
+        {% for question in test.items %}
+            <div class="span6 offset3 well test">
+                <p class="text-left">{{ question.text|trim }}</p>
+
+                <div class="btn-group span12 test-group" data-toggle="buttons-radio" data-numb="{{ loop.index }}">
+                    {% for option in question.options %}
+                        <button type="button" class="btn btn-link btn-test" data-render="{{ loop.index }}">
+                            {{ loop.index }}) {{ option|trim }}
+                        </button><br>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="span6 offset3">
+            <button class="span12 btn btn-large btn-primary btn-send">Завершити</button>
+        </div>
+    </div>
+
+    <div class="row-fluid result">
+        <div class="span6 offset3">
+            <h1 class="text-center">Ваш результат!</h1>
+            <h4 class="text-left">Тест: {{ test.name }}</h4>
+            <h4 class="text-right">{{ userName }} {{ userGroup }}</h4>
+            <h1 class="text-center"><span id="resultat"></span> балів</h1>
+            <p>Потрачений час: <span class="b"></span> секунд</p>
+            <a href="index.php" class="btn btn-link text-rigth" style="color: white">Далі</a>
+        </div>
+    </div>
+    <script>
+
+        function startTimer(timer){
+            var timesToSend = +timer.html();
+            var time = +timer.html();
+            timer.html(0);
+            var interval = setInterval(function () {
+                timer.html(+timer.html()+1);
+                if( Math.abs(timer.html())== timesToSend*2){
+                    $('.btn-send').click();
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+
+        startTimer($('.timer'));
+
+
+        $('.btn-send').click(function () {
+            var render = '';
+
+            var tests = $('.test-group');
+
+            tests.each(function(index, val) {
+                rendere = $(this).find('button.active').attr('data-render');
+                if(typeof rendere == "undefined")
+                    rendere = "0";
+                render += rendere  + ' ';
+            });
+            $(this).attr('disabled', 'disabled');
+            $.get(
+                'testResponder.php',
+                {
+                    render:render,
+                    timer:$('.timer').html()
+                },
+                function(data){
+                    $('.all-test').css('display', 'none');
+                    $('.result').css('display', 'block');
+                    $('#resultat').html(data);
+                    $('.b').html($('.timer').html());
+                    $('.result').addClass('bad');
+                }
+            );
+
+        });
+
+    </script>
+{% endblock %}
